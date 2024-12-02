@@ -1,13 +1,13 @@
-import useField from '../hooks/useField';
-import useLogin from '../hooks/useLogin';
-import { useNavigate } from 'react-router-dom';
+import useField from "../hooks/useField";
+import useLogin from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
-  const email = useField('email');
-  const password = useField('password');
+  const email = useField("email");
+  const password = useField("password");
 
-  const { login, isLoading, error } = useLogin('/api/users/login');
+  const { login, isLoading, error } = useLogin("/api/users/login");
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -16,13 +16,14 @@ const Login = () => {
       password: password.value,
     });
     if (!error) {
-      console.log('success');
-      navigate('/');
+      console.log("success");
+      setIsAuthenticated(true);
+      navigate("/");
     }
   };
 
   return (
-    <div className='create'>
+    <div className="create">
       <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>
         <label>Email address:</label>
